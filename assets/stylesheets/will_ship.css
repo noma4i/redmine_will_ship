@@ -1,0 +1,14 @@
+a.will-ship{
+  background-image: url(../images/will_ship.png);
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+}
+.icon-shipped{
+  background-image: url(../images/true.png);
+}
+.icon-not-shipped{
+  background-image: url(../images/false.png);
+}
+p.left {
+  text-align: left;
+}

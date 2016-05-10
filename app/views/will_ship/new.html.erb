@@ -1,0 +1,36 @@
+<h2>Create Harbor to Ship</h2>
+<p class="legend cal warning left">
+ You should point <b>Harbor</b> to staging/production site where the content of <b><code>git log --format="%H"</code></b> present.
+</p>
+<%= form_for :harbor, :url => { controller: :will_ship, action: :create }  do |f| %>
+  <div class="box">
+      <label> <h4> Label/Name <span class="required"> *</span></h4> </label>
+
+    <p>
+      <%= f.text_field :name %> <br />
+    </p>
+
+    <label>
+      <h4>Redmine project <span class="required"> *</span> </h4>
+    </label>
+
+    <p>
+      <%= f.select :project_id, options_for_select(@projects.map { |p| [p.name, p.id]})  %> <br />
+    </p>
+
+    <label> <h4> Project Endpoint with git log <span class="required"> *</span></h4> </label>
+
+    <p>
+      <%= f.text_field :url %> <br />
+    </p>
+
+
+  </div>
+
+
+  <p>
+    <%= submit_tag 'Create',:name=>'save' %>
+    <%= link_to 'Cancel', :action => :configure %>
+  </p>
+
+<% end %>
