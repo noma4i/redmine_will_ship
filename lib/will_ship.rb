@@ -1,5 +1,9 @@
 module WillShip
   CUSTOM_FIELD_SHIPPED = 'Shipped'
+  LOOKUP_RULES = {
+    'All commits should present' => 'all',
+    'At least ONE commit is present' => 'one'
+  }
     class << self
 
     def custom_fields_list

@@ -17,6 +17,9 @@
         Habor to Ship
       </th>
       <th>
+        Rule
+      </th>
+      <th>
       </th>
     </tr>
   </thead>
@@ -25,7 +28,7 @@
 
   <% unless @harbors.any? %>
     <tr class="nodata">
-      <td colspan="4">
+      <td colspan="5">
           No Harbors to ship...
       </td>
     </tr>
@@ -41,6 +44,9 @@
       <td align="center">
         <%= link_to harbor.url, harbor.url %>
       </td>
+      <td align="center">
+        <%= WillShip::LOOKUP_RULES.invert[harbor.lookup_rule] %>
+      </td>
       <td class="buttons">
           <%= link_to 'Delete', will_ship_path(harbor), :method => :delete, :data => {:confirm => l(:text_are_you_sure)}, :class => 'icon icon-del' %>
       </td>
@@ -51,5 +57,3 @@
   </tbody>
 
 </table>
-
-<div class="box"><pre>README</pre></div>

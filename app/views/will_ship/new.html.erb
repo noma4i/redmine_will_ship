@@ -24,6 +24,14 @@
       <%= f.text_field :url %> <br />
     </p>
 
+    <label>
+      <h4>Lookup Rules <span class="required"> *</span> </h4>
+    </label>
+
+    <p>
+      <%= f.select :lookup_rule, options_for_select(WillShip::LOOKUP_RULES)  %> <br />
+    </p>
+
 
   </div>
 
