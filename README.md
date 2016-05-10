@@ -8,6 +8,15 @@ Plugin checks your staging/production and mark tickets shipped or not. It will t
 
   * You can select different rules
 
+## SHOW TIME
+### Plugin
+![Plugin](screenshots/list.png?raw=true)
+### Setup Harbors to check
+![Plugin](screenshots/harbors.png?raw=true)
+### Additional block in issues
+![Plugin](screenshots/issue.png?raw=true)
+
+
 ## Compatibility
   - Tested with Redmine 2.4.x - 3.1.x
 
