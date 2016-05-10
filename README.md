@@ -52,6 +52,16 @@ edd0fdb56469b1de3f2ba8961121ae252ac0accc
 
 Go to *Administration -> Will Ship* and create *harbors* to check
 
+### Checking Harbors for ships
+
+Plugin will try to check issue status on every issue update. You may want to setup cron job to run daily task
+
+````
+  $ rake redmine:will_ship:check_harbors
+````
+
+This rake task will fetch updates for every issue which was created/updated 1 week ago
+
 ## Author
 
 [Alexander Tsirel @noma4i](https://github.com/noma4i)
