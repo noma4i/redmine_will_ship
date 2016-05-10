@@ -4,9 +4,10 @@ Plugin to give confidence to redmine users are tickets shipped to staging/produc
 
 ## Features
 
-Plugin checks your staging/production and mark tickets shipped or not. It will try to find linked commits from issue in your git history stored as file.
+Plugin checks your staging/production and mark tickets shipped or not. It will try to find linked commits from issue in your git history stored as file at endpoint(harbor)
 
-  * You can select different rules
+  * You can select different rules like 'All commits should present' or 'At least ONE commit is present'
+  * Custom Field called 'Shipped' is updated to 'Yes/No' if at least ONE harbor is shipped.
 
 ## SHOW TIME
 ### Plugin
@@ -15,6 +16,8 @@ Plugin checks your staging/production and mark tickets shipped or not. It will t
 ![Plugin](screenshots/harbors.png?raw=true)
 ### Additional block in issues
 ![Plugin](screenshots/issue.png?raw=true)
+### Using Custom Field
+![Plugin](screenshots/column.png?raw=true)
 
 
 ## Compatibility
