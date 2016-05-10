@@ -26,8 +26,8 @@ module IssuePatch
         end
         cf_id = CustomField.find_by_name(WillShip::CUSTOM_FIELD_SHIPPED).id
         cf = CustomValue.joins(:custom_field).where(custom_fields: {id: cf_id}, customized_id: self.id).first
-        if shipped_cf.present?
-          shipped_cf.update_column(:value, is_shipped)
+        if cf.present?
+          cf.update_column(:value, is_shipped)
         else
           CustomValue.create!(
             customized_type: 'Issue',
