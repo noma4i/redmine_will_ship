@@ -6,6 +6,8 @@ Plugin to give confidence to redmine users are tickets shipped to staging/produc
 
 Plugin checks your staging/production and mark tickets shipped or not. It will try to find linked commits from issue in your git history stored as file.
 
+  * You can select different rules
+
 ## Compatibility
   - Tested with Redmine 2.4.x - 3.1.x
 
