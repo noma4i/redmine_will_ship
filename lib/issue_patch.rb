@@ -18,7 +18,7 @@ module IssuePatch
           harbor_commits = open(h.url).read.split("\n") rescue []
           if check_rules(issue_commits, harbor_commits, h.lookup_rule)
             h_t.shipped = true
-            is_shipped = false
+            is_shipped = true
           else
             h_t.shipped = false
           end
