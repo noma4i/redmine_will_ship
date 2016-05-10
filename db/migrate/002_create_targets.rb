@@ -4,7 +4,6 @@ class CreateTargets < ActiveRecord::Migration
       t.column :harbor_id, :integer
       t.column :issue_id, :integer
       t.column :shipped, :boolean
-      t.column :shipped, :boolean
       t.timestamps
     end
   end
