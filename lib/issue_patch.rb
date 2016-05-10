@@ -31,7 +31,7 @@ module IssuePatch
         else
           CustomValue.create!(
             customized_type: 'Issue',
-            custom_field_id: shipped_field,
+            custom_field_id: cf_id,
             customized_id: self.id,
             value: is_shipped
           )
