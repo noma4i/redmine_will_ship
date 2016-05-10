@@ -3,9 +3,9 @@
 <div class="contextual">
   <%= link_to 'Update', {:action => 'force_update', :controller => 'will_ship', :issue_id => @issue.id}, :class => 'icon icon-reload' %>
 </div>
-<p><strong>Shipped to</strong>
+<p><strong>Shipping Status</strong>
 <% if @issue.shipped_targets.any? %>
-  <i><%= time_tag(@issue.shipped_targets.last.updated_at) %></i>
+  <i>checked <%= time_tag(@issue.shipped_targets.last.updated_at) %></i>
 <% end %>
 </p>
 <p>
