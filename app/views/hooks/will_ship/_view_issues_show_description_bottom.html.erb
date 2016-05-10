@@ -6,7 +6,7 @@
   </div>
   <p><strong>Shipping Status</strong>
   <% if @issue.shipped_targets.any? %>
-    <i>checked <%= time_tag(@issue.shipped_targets.last.updated_at) %></i>
+    <i>checked <%= time_tag(@issue.shipped_targets.last.updated_at) %> ago</i>
   <% end %>
   </p>
   <p>
