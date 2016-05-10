@@ -24,8 +24,18 @@ module IssuePatch
           end
           h_t.save
         end
-        shipped_cf = CustomValue.joins(:custom_field).where(custom_fields: {id: custom_field_pivotal_story_description}, customized_id: issue_id).first
-        shipped_cf.update_column(:value, is_shipped)
+        cf_id = CustomField.find_by_name(WillShip::CUSTOM_FIELD_SHIPPED).id
+        cf = CustomValue.joins(:custom_field).where(custom_fields: {id: cf_id}, customized_id: self.id).first
+        if shipped_cf.present?
+          shipped_cf.update_column(:value, is_shipped)
+        else
+          CustomValue.create!(
+            customized_type: 'Issue',
+            custom_field_id: shipped_field,
+            customized_id: self.id,
+            value: is_shipped
+          )
+        end
       end
 
       protected
