@@ -11,14 +11,14 @@ module IssuePatch
       def check_harbors!
         project = self.project
         harbors = project.harbors
-        issue_commits = self.changesets.map(&:revision)
+        issue_commits = self.changesets.map(&:scmid)
         is_shipped = false
         empty_harbors = []
         harbors.each do |h|
           h_t = self.shipped_targets.find_by_harbor_id(h.id) || h.shipped_targets.new(issue_id: self.id)
           harbor_commits = open(h.url).read.split("\n") rescue []
           empty_harbors << [h.name, h.url] if harbor_commits.empty?
-          if check_rules(issue_commits, harbor_commits, h.lookup_rule)
+          if check_rules(issue_commits, harbor_commits, h)
             h_t.shipped = true
             is_shipped = true
           else
@@ -48,13 +48,27 @@ module IssuePatch
 
       protected
 
-      def check_rules(i, h, rule)
+      def mark_changeset(scmid, harbor_id, shipped)
+        ch_set = Changeset.find_by_scmid scmid
+        ch_set.shipped_changes.destroy
+        ch_set.shipped_changes.create(harbor_id: harbor_id, shipped: shipped)
+      end
+
+      def check_rules(i, h, harbor)
+        rule = harbor.lookup_rule
+
+        i.each do |c|
+          mark_changeset(c, harbor.id, h.include?(c))
+        end
+
         case rule
           when 'one'
-            (i & h).any?
+            result = (i & h).any?
           when 'all'
-            !(i - h).any?
+            result = !(i - h).any?
         end
+
+        result
       end
     end
   end
