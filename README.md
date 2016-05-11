@@ -33,6 +33,10 @@ Install missing gems:
 ````
   $ bundle install
 ````
+Run bundle install:
+````
+  $ bundle install
+````
 Run migrations:
 ````
   $ rake redmine:plugins:migrate

@@ -1,5 +1,4 @@
 require_dependency 'issue'
-require 'open-uri'
 
 module IssuePatch
   def self.included(klass)
@@ -14,9 +13,14 @@ module IssuePatch
         issue_commits = self.changesets.map(&:scmid)
         is_shipped = false
         empty_harbors = []
+
+        self.changesets.each do |ch|
+          ch.shipped_changes.destroy_all
+        end
+
         harbors.each do |h|
           h_t = self.shipped_targets.find_by_harbor_id(h.id) || h.shipped_targets.new(issue_id: self.id)
-          harbor_commits = open(h.url).read.split("\n") rescue []
+          harbor_commits = HTTParty.get(h.url).split("\n") rescue []
           empty_harbors << [h.name, h.url] if harbor_commits.empty?
           if check_rules(issue_commits, harbor_commits, h)
             h_t.shipped = true
@@ -50,7 +54,6 @@ module IssuePatch
 
       def mark_changeset(scmid, harbor_id, shipped)
         ch_set = Changeset.find_by_scmid scmid
-        ch_set.shipped_changes.destroy
         ch_set.shipped_changes.create(harbor_id: harbor_id, shipped: shipped)
       end
 
