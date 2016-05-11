@@ -8,6 +8,7 @@ Plugin checks your staging/production and mark tickets shipped or not. It will t
 
   * You can select different rules like 'All commits should present' or 'At least ONE commit is present'
   * Custom Field called 'Shipped' is updated to 'Yes/No' if at least ONE harbor is shipped.
+  * Commits will be marked with Tick if they are present on any destination
 
 ## SHOW TIME
 ### Plugin
@@ -18,6 +19,8 @@ Plugin checks your staging/production and mark tickets shipped or not. It will t
 ![Plugin](screenshots/issue.png?raw=true)
 ### Using Custom Field
 ![Plugin](screenshots/column.png?raw=true)
+### Changes are marked as shipped
+![Plugin](screenshots/changeset.png?raw=true)
 
 
 ## Compatibility
