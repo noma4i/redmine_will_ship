@@ -13,16 +13,19 @@ module IssuePatch
         harbors = project.harbors
         issue_commits = self.changesets.map(&:revision)
         is_shipped = false
+        empty_harbors = []
         harbors.each do |h|
           h_t = self.shipped_targets.find_by_harbor_id(h.id) || h.shipped_targets.new(issue_id: self.id)
           harbor_commits = open(h.url).read.split("\n") rescue []
+          empty_harbors << [h.name, h.url] if harbor_commits.empty?
           if check_rules(issue_commits, harbor_commits, h.lookup_rule)
             h_t.shipped = true
             is_shipped = true
           else
             h_t.shipped = false
           end
-          h_t.save
+          h_t.save!
+          h_t.touch
         end
         cf_id = CustomField.find_by_name(WillShip::CUSTOM_FIELD_SHIPPED).id
         cf = CustomValue.joins(:custom_field).where(custom_fields: {id: cf_id}, customized_id: self.id).first
@@ -35,6 +38,11 @@ module IssuePatch
             customized_id: self.id,
             value: is_shipped
           )
+        end
+        if empty_harbors.any?
+          empty_harbors
+        else
+          true
         end
       end
 

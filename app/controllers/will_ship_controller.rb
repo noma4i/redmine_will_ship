@@ -45,11 +45,15 @@ class WillShipController < ApplicationController
   def force_update
     issue = Issue.find params[:issue_id]
     return unless issue.present?
-    issue.check_harbors!
+    result = issue.check_harbors!
 
-    flash[:notice] = 'All Harbors checked! If we shipped we will see.'
-
-    redirect_to :back
+    if result == true
+      flash[:notice] = 'All Harbors checked! If we shipped we will see.'
+      redirect_to :back
+    else
+      @harbors = result
+      render 'empty_harbors'
+    end
   end
 
   protected

@@ -1,0 +1,7 @@
+<h2>Some Harbors broken</h2>
+<p id="errorExplanation">Redmine can't find any commits here</p>
+<p class="legend cal warning left">
+<% @harbors.each do |h|  %>
+    &mdash; <%= "#{h[0]} URL: #{h[1]}" %> unreachable or empty!<br/>
+<% end %>
+</p>
