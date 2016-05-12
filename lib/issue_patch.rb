@@ -14,9 +14,9 @@ module IssuePatch
         is_shipped = false
         empty_harbors = []
 
-        self.changesets.each do |ch|
-          ch.shipped_changes.destroy_all
-        end
+        # self.changesets.each do |ch|
+        #   ch.shipped_changes.map(&:delete)
+        # end
 
         harbors.each do |h|
           h_t = self.shipped_targets.find_by_harbor_id(h.id) || h.shipped_targets.new(issue_id: self.id)
@@ -54,7 +54,12 @@ module IssuePatch
 
       def mark_changeset(scmid, harbor_id, shipped)
         ch_set = Changeset.find_by_scmid scmid
-        ch_set.shipped_changes.create(harbor_id: harbor_id, shipped: shipped)
+
+        return unless ch_set.present?
+
+        shipped_changes = ShippedChange.where(changeset_id: ch_set.id, harbor_id: harbor_id).try(:first) || ch_set.shipped_changes.new(harbor_id: harbor_id)
+        shipped_changes.shipped = shipped
+        shipped_changes.save!
       end
 
       def check_rules(i, h, harbor)
