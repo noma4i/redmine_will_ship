@@ -14,10 +14,6 @@ module IssuePatch
         is_shipped = false
         empty_harbors = []
 
-        # self.changesets.each do |ch|
-        #   ch.shipped_changes.map(&:delete)
-        # end
-
         harbors.each do |h|
           h_t = self.shipped_targets.find_by_harbor_id(h.id) || h.shipped_targets.new(issue_id: self.id)
           harbor_commits = HTTParty.get(h.url).split("\n") rescue []
@@ -57,9 +53,17 @@ module IssuePatch
 
         return unless ch_set.present?
 
-        shipped_changes = ShippedChange.where(changeset_id: ch_set.id, harbor_id: harbor_id).try(:first) || ch_set.shipped_changes.new(harbor_id: harbor_id)
-        shipped_changes.shipped = shipped
-        shipped_changes.save!
+        shipped_changes = ShippedChange.where(changeset_id: ch_set.id, harbor_id: harbor_id)
+
+        if shipped_changes.size > 1
+          shipped_changes.map(&:delete)
+          sets = ch_set.shipped_changes.new(harbor_id: harbor_id)
+        else
+          sets = shipped_changes.try(:first) || ch_set.shipped_changes.new(harbor_id: harbor_id)
+        end
+
+        sets.shipped = shipped
+        sets.save!
       end
 
       def check_rules(i, h, harbor)
