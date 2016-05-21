@@ -26,19 +26,24 @@ module IssuePatch
           end
           h_t.save!
           h_t.touch
+
+          cf = h.custom_field
+          if cf.present?
+            cf_shipped_value = cast_value(cf, is_shipped)
+            cf_value = CustomValue.joins(:custom_field).where(custom_fields: {id: cf.id}, customized_id: self.id).first
+            if cf_value.present?
+              cf_value.update_column(:value, cf_shipped_value)
+            else
+              CustomValue.create!(
+                customized_type: 'Issue',
+                custom_field_id: cf.id,
+                customized_id: self.id,
+                value: cf_shipped_value
+              )
+            end
+          end
         end
-        cf_id = CustomField.find_by_name(WillShip::CUSTOM_FIELD_SHIPPED).id
-        cf = CustomValue.joins(:custom_field).where(custom_fields: {id: cf_id}, customized_id: self.id).first
-        if cf.present?
-          cf.update_column(:value, is_shipped)
-        else
-          CustomValue.create!(
-            customized_type: 'Issue',
-            custom_field_id: cf_id,
-            customized_id: self.id,
-            value: is_shipped
-          )
-        end
+
         if empty_harbors.any?
           empty_harbors
         else
@@ -47,6 +52,17 @@ module IssuePatch
       end
 
       protected
+
+      def cast_value(custom_field, value)
+        case custom_field.field_format
+        when 'int'
+          value ? 1 : 0
+        when 'bool'
+          value
+        when 'string', 'text'
+          value ? 'Yes' : 'No'
+        end
+      end
 
       def mark_changeset(scmid, harbor_id, shipped)
         ch_set = Changeset.find_by_scmid scmid
@@ -80,7 +96,7 @@ module IssuePatch
             result = !(i - h).any?
         end
 
-        result
+        i.any? ? result : false
       end
     end
   end

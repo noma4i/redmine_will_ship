@@ -32,6 +32,15 @@
       <%= f.select :lookup_rule, options_for_select(WillShip::LOOKUP_RULES)  %> <br />
     </p>
 
+    <label>
+      <h4>Custom Field</h4>
+      <small>Used as to set Yes/No marking Issues as shipped or not</small>
+    </label>
+
+    <p>
+      <%= f.select :custom_field_id, options_for_select(IssueCustomField.all.collect {|p| [ p.name, p.id ] }), {include_blank: '-- No Fields --'}  %> <br />
+    </p>
+
 
   </div>
 

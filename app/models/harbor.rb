@@ -4,4 +4,5 @@ class Harbor < ActiveRecord::Base
   belongs_to :project
   has_many :shipped_targets, dependent: :destroy
   has_many :shipped_changes, dependent: :destroy
+  belongs_to :custom_field
 end
