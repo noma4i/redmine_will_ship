@@ -24,7 +24,7 @@ Plugin checks your staging/production and mark tickets shipped or not. It will t
 
 
 ## Compatibility
-  - Tested with Redmine 2.4.x - 3.1.x
+  - Tested with Redmine 2.5.x - 3.1.x
 
 ## Setup
 ### Installation
