@@ -14,7 +14,7 @@ Redmine::Plugin.register :will_ship do
   name 'Will Ship Plugin'
   author 'Alexander Tsirel'
   description 'Way to say is ticket shipped or not'
-  version '0.0.1'
+  version '0.0.2'
 
-  menu :admin_menu, :will_ship, {controller: :will_ship, action: 'configure'}, caption: 'Will Ship', last: true
+  menu :admin_menu, :will_ship, { controller: :will_ship, action: 'configure' }, caption: 'Will Ship', last: true
 end
