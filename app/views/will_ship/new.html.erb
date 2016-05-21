@@ -38,7 +38,7 @@
     </label>
 
     <p>
-      <%= f.select :custom_field_id, options_for_select(IssueCustomField.all.collect {|p| [ p.name, p.id ] }), {include_blank: '-- No Fields --'}  %> <br />
+      <%= f.select :custom_field_id, options_for_select(@custom_fields.collect {|p| [ p.name, p.id ] }), {include_blank: '-- No Fields --'}  %> <br />
     </p>
 
 

@@ -6,6 +6,7 @@ class WillShipController < ApplicationController
   def new
     @harbor = Harbor.new
     @projects = Project.all
+    @custom_fields = IssueCustomField.where('field_format in (?)', %w(int bool string text))
   end
 
   def edit
