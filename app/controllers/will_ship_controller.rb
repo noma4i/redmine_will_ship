@@ -33,13 +33,7 @@ class WillShipController < ApplicationController
   end
 
   def configure
-    if WillShip.missing_custom_fields
-      @custom_fields_list = WillShip.custom_fields_list
-      render 'misconfiguration'
-    else
-      @harbors = Harbor.all
-      render 'configure'
-    end
+    @harbors = Harbor.all
   end
 
   def force_update
