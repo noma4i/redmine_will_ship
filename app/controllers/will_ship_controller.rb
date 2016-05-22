@@ -52,6 +52,7 @@ class WillShipController < ApplicationController
   end
 
   protected
+
   def find_harbor
     @harbor = Harbor.find params[:id]
   end
