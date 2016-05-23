@@ -11,7 +11,6 @@ module IssuePatch
         project = self.project
         harbors = project.harbors
         issue_commits = self.changesets.map(&:scmid)
-        is_shipped = false
         empty_harbors = []
 
         harbors.each do |h|
@@ -20,7 +19,6 @@ module IssuePatch
           empty_harbors << [h.name, h.url] if harbor_commits.empty?
           if check_rules(issue_commits, harbor_commits, h)
             h_t.shipped = true
-            is_shipped = true
           else
             h_t.shipped = false
           end
@@ -29,7 +27,7 @@ module IssuePatch
 
           cf = h.custom_field
           if cf.present?
-            cf_shipped_value = cast_value(cf, is_shipped)
+            cf_shipped_value = cast_value(cf, h_t.shipped)
             cf_value = CustomValue.joins(:custom_field).where(custom_fields: {id: cf.id}, customized_id: self.id).first
             if cf_value.present?
               cf_value.update_column(:value, cf_shipped_value)
