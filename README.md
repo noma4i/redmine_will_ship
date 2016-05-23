@@ -81,7 +81,7 @@ Plugin will try to check issue status on every issue update. You may want to set
   $ rake redmine:will_ship:check_harbors
 ````
 
-This rake task will fetch updates for every issue which was created/updated 1 week ago
+This rake task will fetch updates for every issue which was created/updated 3 weeks ago(should be enough for most cases)
 
 ## Author
 
