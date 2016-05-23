@@ -4,7 +4,7 @@ namespace :redmine do
     task :check_harbors => :environment do
       Project.all.each do |p|
         next unless p.harbors.any?
-        p.issues.where('updated_on > ?', 1.week.ago).each do |i|
+        p.issues.where('updated_on > ?', 3.week.ago).each do |i|
           i.check_harbors!
         end
       end
