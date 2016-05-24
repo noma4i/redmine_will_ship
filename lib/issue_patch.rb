@@ -27,7 +27,7 @@ module IssuePatch
 
           cf = h.custom_field
           if cf.present?
-            cf_shipped_value = cast_value(cf, h_t.shipped)
+            cf_shipped_value = issue_cast_value(cf, h_t.shipped)
             cf_value = CustomValue.joins(:custom_field).where(custom_fields: {id: cf.id}, customized_id: self.id).first
             if cf_value.present?
               cf_value.update_column(:value, cf_shipped_value)
@@ -51,7 +51,7 @@ module IssuePatch
 
       protected
 
-      def cast_value(custom_field, value)
+      def issue_cast_value(custom_field, value)
         case custom_field.field_format
         when 'int'
           value ? 1 : 0
