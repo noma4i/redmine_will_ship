@@ -5,7 +5,7 @@ module IssuePatch
     klass.class_eval do
       unloadable
       has_many :shipped_targets, dependent: :destroy
-      after_update :check_harbors!
+      # after_update :check_harbors!
 
       def check_harbors!
         project = self.project
